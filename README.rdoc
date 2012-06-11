@@ -27,7 +27,7 @@ beds will generate a set of Sinata routes and corrisponding ERb views that will 
     include DataMapper::Resource
      property :id, Serial
      property  :name, Text, :required => true, :messages => { :presence => "Please enter your name" }
-     property  :login, Text, :required => true, :unique => true, { :presence => "Please select a login ID", :is_unique => "Login already in use. Try again" }
+     property  :login, Text, :required => true, :unique => true, :messages => { :presence => "Please select a login ID", :is_unique => "Login already in use. Try again" }
      property  :pasword, Text, :required => true, :length => 6..100, :messages => { :presence => "Please provide a password", :length => "Sorry.  Your password must be between 6 and 100 characters long." }
      property  :email, Text, :format => :email_address, :unique => true, :messages => {  :format => "Please check your email address and try again.", :presence => "It looks like you forgot to enter your email address.", :is_unique => "Sorry. This email is already associated with a different account" }
   end
