@@ -1,0 +1,21 @@
+<a href="/<%=@model_name.downcase%>/new" class="btn btn-info">New</a>
+<table class="table table-bordered">
+<thead>
+  <% @properties.each do |header| %>
+	<th><%=header.name%></th>
+  <% end %>
+  <th>Actions</th>
+</thead>
+<tbody>
+  <%% @db_objects.each do |object| %>
+	<tr>
+	<% @properties.each do |prop| %>
+	  <td><%%=object.<%=prop.name%>%></td>
+	<%end%>
+	<td><a href="/<%=@model_name.downcase%>/<%%=object.id%>" class="btn btn-mini">Edit</a>
+	<a href="/<%=@model_name.downcase%>/delete/<%%=object.id%>" class="btn btn-mini">Delete</a></td>
+	</tr>
+  <%%end%>
+</tbody>
+</table>
+

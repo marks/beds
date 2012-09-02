@@ -1,10 +1,10 @@
-= beds
-a BootStrap ERb DataMapper Sinatra [Scaffolder]
+= Beds
+== A BootStrap ERb DataMapper Sinatra [Scaffolder]
 
 beds will generate a set of Sinata routes and corrisponding ERb views that will allow you to manipulate the DataMapper models specified in your models.rb.
 
 = Usage
- beds -m <models.rb> [OPTIONS]
+ beds scaffold -m <models.rb> [OPTIONS]
     -m, --models FILE                Specify file with DataMapper models defined.
     -v, --viewdir                    Specify which directory to place the views in. Default: ./views/
     -r, --routefile                  Sepcify the file to generate the routes in. Default: scaffold.rb
@@ -45,3 +45,6 @@ beds will generate a set of Sinata routes and corrisponding ERb views that will 
   require 'sinatra'
   require './models.rb'
   require './scaffold.rb'
+
+= Example cli usage
+  beds scaffold -m models.rb

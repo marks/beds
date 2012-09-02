@@ -1,0 +1,7 @@
+get '/<%=@model_name.downcase%>/?' do
+  @offset = params["page"] if params["page"] =~ /[0-9]+/
+  @offset ||= 0
+  @db_objects = <%=@model_name%>.all(:limit => 20,:offset => @offset * 20)
+  erb :list_<%=@model_name.downcase%>
+end
+

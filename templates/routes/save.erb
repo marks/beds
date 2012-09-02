@@ -1,0 +1,17 @@
+post '/<%=@model_name.downcase%>/save' do
+  db_object = <%=@model_name%>.new
+  params.each do |key,value|
+    db_object.send("#{key}=",value) if <%=@model_name%>.properties.collect{|x| x.name}.include? key.to_sym
+  end
+  if db_object.save! then  
+    redirect "/<%=@model_name.downcase%>/#{db_object.id}"
+  else
+    result = []
+    db_object.errors.each do |e|
+      result << "Error:<li>#{e}</li>"
+    end
+      return "<UL>#{result.join("")}</UL>"
+    end
+      return "YAY"
+end
+

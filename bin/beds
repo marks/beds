@@ -1,70 +1,15 @@
 #!/usr/bin/env ruby
-require 'beds'
-@options = {
-:viewdir => "./views",
-:routefile => "./scaffold.rb",
-:list => true,
-:save => true,
-:template => true,
-:new => true,
-:index => true,
-:exclude => []
-}
-optparser = OptionParser.new do |opts|
-  opts.banner = " Usage: #{File.basename($0)} -m <models.rb> [OPTIONS]"
-    opts.on("-m","--models FILE", "Specify file with DataMapper models defined.") do |app|
-      @options[:app] = app
-    end
-    opts.on("-v","--viewdir","Specify which directory to place the views in. Default: ./views/") do |viewdir|
-      @options[:viewdir] = viewdir
-    end
-    opts.on("-r","--routefile", "Sepcify the file to generate the routes in. Default: scaffold.rb") do |routefile|
-      @options[:routefile] = routefile
-    end
-    opts.on("--exclude x,y,z", Array, "Do not generate anything for specified models, or before, index, and/or layout") do |models|
-      @options[:exclude] = models
-    end
-    opts.on("--only x,y,z", Array, "Only process the specified models.") do |models|
-      @options[:only] = models
-    end
-    opts.on("-f","--[no-]force", "Overwtie files") do |force|
-      @options[:force] = force
-    end
-end
+require "#{File.dirname("FILE")}/../lib/beds"
+require "#{File.dirname("FILE")}/../lib/cli"
 
-begin
-  optparser.parse! ARGV
-  raise OptionParser::InvalidOption, "[NONE]" if @options[:app].nil?
-rescue OptionParser::InvalidOption => e
-  puts e
-  puts optparser
+## A bit of magic to call Beds::CLI::<CLI-Command>
+if Beds::CLI.const_defined?(ARGV[0].capitalize.to_sym) then
+  Beds::CLI.const_get(ARGV[0].capitalize.to_sym).send(:new,ARGV[1..-1])
+  exit 0
+else
+  puts " Usage: #{File.basename($0)} [scaffold|new] [OPTIONS]"
+  puts "   See #{File.basename($0)} scaffold --help or #{File.basename($0)} new --help foor more information"
   exit 1
 end
 
 
-
-load "#{@options[:app]}"
-scaffold = SinScaffold.new(@options)
-scaffold.generate
-
-### Write Files
-
-if File.exist?(@options[:routefile]) and ! @options[:force] then
-  puts "Error: Route file #{@options[:routefile]} already exists. Not writing"
-else
-  File.open(@options[:routefile],"w") {|file| file.write(scaffold.routes.join("\n"))}
-end
-
-Dir.mkdir(@options[:viewdir]) unless Dir.exist?(@options[:viewdir])
-
-@gen_files = []
-scaffold.views.each {|file,content|
-  if File.exist?(File.join(@options[:viewdir],file)) and ! @options[:force] then
-    puts "Warning: file #{File.join(@options[:viewdir],file)} exists. Not overwriting"
-  else
-    @gen_files << File.join(@options[:viewdir],file)
-    File.open(File.join(@options[:viewdir],file),"w") {|file| file.write(content) }
-  end
-}
-
-puts "Generated files: #{@gen_files.join(", ")}"

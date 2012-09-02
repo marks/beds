@@ -1,0 +1,10 @@
+get '/<%=@model_name.downcase%>/delete/:id/?' do |id|
+  db_object = <%=@model_name%>.first(:id => id)
+  if db_object then
+	  db_object.destroy
+	  redirect '/<%=@model_name.downcase%>/'
+  else
+	  redirect 404
+  end
+end
+

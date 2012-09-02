@@ -1,0 +1,25 @@
+get '/<%=@model_name.downcase%>/:id/?' do |id|
+  pass if "#{id.to_i}" != "#{id}"
+  @db_object = <%=@model_name%>.first(:id => id)
+  return 404 if @db_object.nil?
+  erb :edit_<%=@model_name.downcase%>
+end
+
+post '/<%=@model_name.downcase%>/:id/?' do |id|
+  db_object = <%=@model_name%>.first(:id => id)
+  pass  if ! db_object
+  params.each do |key,value|
+	db_object.send("#{key}=",value) if <%=@model_name%>.properties.collect{|x| x.name}.include? key.to_sym
+  end
+  if db_object.save then
+	redirect "/<%=@model_name.downcase%>/#{db_object.id}"
+  else
+	result = []
+	db_object.errors.each do |e|
+	  STDERR.puts e
+	  result << "<li>#{e}</li>"
+	end
+	return "<UL>#{result.join("")}</UL>"
+  end
+end
+

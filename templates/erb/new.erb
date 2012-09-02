@@ -1,0 +1,9 @@
+<form class="well row" method="post" action="/<%=@model_name.downcase%>/save">
+<% @properties.each do |prop| %>
+<% next if prop.name == :id %>
+  <label><%=prop.name.to_s%></label>
+  <%=form_type(prop,:name => prop.name)%>
+<% end %>
+  <button type="submit" class="btn">Submit</button>
+</form>
+

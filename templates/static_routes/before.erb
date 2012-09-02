@@ -1,0 +1,4 @@
+before do
+  @active_page = request.path_info.split(/\//)[1]
+  @active_page = "index" if @active_page.nil?
+end
