@@ -1,7 +1,7 @@
 = Beds
 == A BootStrap ERb DataMapper Sinatra [Scaffolder]
 
-beds will generate a set of Sinata routes and corrisponding ERb views that will allow you to manipulate the DataMapper models specified in your models.rb.
+beds will generate a set of Sinata application in an MVC style directory structure with routes and corrisponding ERb views that will allow you to manipulate the DataMapper models specified in your models.rb.
 
 = Usage
  beds scaffold -m <models.rb> [OPTIONS]
@@ -19,7 +19,8 @@ beds will generate a set of Sinata routes and corrisponding ERb views that will 
   require 'dm-migrations'
   require 'dm-validations'
   require 'yaml'
-
+  
+  # Assumes a "database.yml" configuration file.
   db_config = YAML.load_file(File.join(File.dirname(__FILE__),"database.yml"))
   DataMapper.setup(:default, "mysql://#{db_config['user']}:#{db_config['password']}@#{db_config['server']}/#{db_config['database']}")
 
@@ -44,7 +45,17 @@ beds will generate a set of Sinata routes and corrisponding ERb views that will 
   require 'rubygems'
   require 'sinatra'
   require './models.rb'
-  require './scaffold.rb'
+  Dir.glob("#{File.dirname(__FILE__)}/controllers/*.rb").each { |controller| load controller }
 
 = Example cli usage
   beds scaffold -m models.rb
+
+= Custom Templates
+  See the templates directory for example templates.
+  Templates should be in ~/.beds/<template_dir>/.  The <tempalte_dir> can be one of erb, static_erb, routes, static_routes, or hooks.
+  * erb - Views for save, edit, view, etc that need to be generated for every model.
+  * static_erb - Views like 'index.erb' that only need to be included once.
+  * routes - Routes needed to be generated for every model, i.e. view, edit, save, delete.
+  * static_routes - Routes only needed to be included once, i.e. get '/'
+  * hooks - Ruby scripts that will be 'eval'ed after the scaffolding to download required files (i.e. bootstarp & jquery)
+
