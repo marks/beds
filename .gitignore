@@ -1,3 +1,5 @@
 .rvmrc
 test_app
 doc
+
+*.gem
