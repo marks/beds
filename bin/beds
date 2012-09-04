@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
-require "#{File.dirname(__FILE__)}/../lib/beds"
-require "#{File.dirname(__FILE__)}/../lib/cli"
+require "#{File.dirname(__FILE__)}/../lib/beds.rb"
+require "#{File.dirname(__FILE__)}/../lib/cli.rb"
 
 ## A bit of magic to call Beds::CLI::<CLI-Command>
-if Beds::CLI.const_defined?(ARGV[0].capitalize.to_sym) then
-  Beds::CLI.const_get(ARGV[0].capitalize.to_sym).send(:new,ARGV[1..-1])
+cmd = ARGV[0].nil? ? "" : ARGV[0]
+if ! cmd == "" and Beds::CLI.const_defined?(cmd.capitalize.to_sym) then
+  Beds::CLI.const_get(cmd.capitalize.to_sym).send(:new,ARGV[1..-1])
   exit 0
 else
   puts " Usage: #{File.basename($0)} [scaffold|new] [OPTIONS]"
