@@ -1,0 +1,11 @@
+source :rubygems
+
+gem 'sinatra'
+gem 'dm-core'
+gem 'dm-mysql-adapter'
+gem 'dm-migrations'
+gem 'dm-validations'
+gem 'shotgun'
+<% @gems.each do |gem| %>
+gem '<%= gem %>'
+<% end unless @gems.empty? %>

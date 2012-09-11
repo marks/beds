@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name    = 'beds'
-  s.version = '0.1.2'
+  s.version = '1.0.1'
   s.summary = 'The BootStrap ERb DataMapper Sinatra [scaffolder]'
   s.description = 'Easily create Sinatra applications quikcly and easily by scaffolding your models.'
   s.author = 'James Paterni'

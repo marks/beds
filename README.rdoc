@@ -12,6 +12,14 @@ beds will generate a set of Sinata application in an MVC style directory structu
         --only x,y,z                 Only process the specified models.
     -f, --[no-]force                 Overwtie files
 
+= Or
+ beds new -a <app-name> [OPTIONS]
+   Usage: /Users/jpaterni/projects/beds/lib/new.rb [options] -a <app_name>
+    -a, --app [app]
+    -h, --help                       Display this information
+    -g, --include-gem GEM            Require gem in gemfile
+
+
 = Example models.rb
   require 'rubygems'
   require 'dm-core'

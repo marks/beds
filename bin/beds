@@ -4,12 +4,12 @@ require "#{File.dirname(__FILE__)}/../lib/cli.rb"
 
 ## A bit of magic to call Beds::CLI::<CLI-Command>
 cmd = ARGV[0].nil? ? "" : ARGV[0]
-if ! cmd == "" and Beds::CLI.const_defined?(cmd.capitalize.to_sym) then
+if cmd != "" and Beds::CLI.const_defined?(cmd.capitalize) then
   Beds::CLI.const_get(cmd.capitalize.to_sym).send(:new,ARGV[1..-1])
   exit 0
 else
   puts " Usage: #{File.basename($0)} [scaffold|new] [OPTIONS]"
-  puts "   See #{File.basename($0)} scaffold --help or #{File.basename($0)} new --help foor more information"
+  puts "   See #{File.basename($0)} scaffold --help or #{File.basename($0)} new --help for more information"
   exit 1
 end
 
