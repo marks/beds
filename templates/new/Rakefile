@@ -5,5 +5,11 @@ namespace "db" do
     require './models.rb'
     DataMapper.auto_migrate!
   end
+  desc "Upgrade the database"
+  task :upgrade, [:environment] do |t,args|
+    args.with_defaults(:environment => ENV['RAILS_ENV'].nil? ? "production" : ENV['RAILS_ENV'])
+    require './models.rb'
+    DataMapper.auto_upgrade!
+  end
 end
 

@@ -4,7 +4,7 @@ require 'dm-mysql-adapter'
 require 'dm-migrations'
 require 'dm-validations'
 
-DataMapper.setup(:default, "mysql://localhost/#{@app}")
+DataMapper.setup(:default, "mysql://localhost/<%=@app%>")
 
 ## Include Models Below.
 ## Example:
