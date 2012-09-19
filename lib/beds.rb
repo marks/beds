@@ -1,4 +1,4 @@
-  #!/usr/bin/env ruby
+#!/usr/bin/env ruby
 require 'erb'
 require 'optparse'
 ## == Beds - BootStrap Erb DataMapper Sinatra [Scaffolder]
