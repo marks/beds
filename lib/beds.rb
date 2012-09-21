@@ -65,7 +65,7 @@ module Beds
       @templates[:erb] = { }
       @templates[:hooks] = { }
       @templates.each do |key,val|
-        template_files = Dir.exist?("#{home_dir}/#{key.to_s}") ? Dir.glob("/#{home_dir}/#{key.to_s}/*") : Dir.glob("/#{template_dir}/#{key.to_s}/*")
+        template_files = File.exist?("#{home_dir}/#{key.to_s}") ? Dir.glob("/#{home_dir}/#{key.to_s}/*") : Dir.glob("/#{template_dir}/#{key.to_s}/*")
         template_files.each { |file| @templates[key][File.basename(file).sub(/\.erb$/,"")] = File.open(file).read } 
       end
     end

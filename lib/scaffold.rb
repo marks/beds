@@ -2,18 +2,18 @@ module Beds
   module CLI
     class Scaffold
       def initialize(options)
-      @options = {
-        :viewdir => "./views",
-        :public => "./public",
-        :controllers => "./controllers",
-        :routefile => "./scaffold.rb",
-        :list => true,
-        :save => true,
-        :template => true,
-        :new => true,
-        :index => true,
-        :run_hooks => true,
-        :exclude => []
+        @options = {
+          :viewdir => "./views",
+          :public => "public",
+          :controllers => "./controllers",
+          :routefile => "./scaffold.rb",
+          :list => true,
+          :save => true,
+          :template => true,
+          :new => true,
+          :index => true,
+          :run_hooks => true,
+          :exclude => []
         }; @options[:assets] = "#{@options[:public]}/assets"
         get_options(options)
         load_models
@@ -44,7 +44,7 @@ module Beds
       ## Write the generated files to disk.
       def make_files
         @gen_files = []
-        [@options[:viewdir],@options[:public],@options[:assets],@options[:controllers]].each {|directory| Dir.mkdir(directory) unless Dir.exist?(directory) }
+        [@options[:viewdir],@options[:public],@options[:assets],@options[:controllers]].each {|directory| Dir.mkdir(directory) unless File.directory?(directory) }
         @scaffold.routes.each do |controller,contents|
           if File.exist?(File.join(@options[:controllers],"#{controller}.rb")) and @options[:force] != true then
             puts "Error: Controller #{File.join(@options[:controllers],"#{controller}.rb")} already exists. Not writing"
@@ -86,6 +86,9 @@ module Beds
             end
             opts.on("-f","--[no-]force", "Overwtie files") do |force|
               @options[:force] = force
+            end
+            opts.on("--[no-]hooks", "Run hooks") do |hooks|
+              @options[:run_hooks] = hooks
             end
         end
         begin

@@ -1,6 +1,11 @@
+require 'rubygems'
 require "./lib/beds.rb"
+require './lib/cli.rb'
+require './lib/scaffold.rb'
 require 'dm-core'
 
+
+## Need some sort of db model for beds to work.  
 class User
   include DataMapper::Resource
    property :id, Serial
@@ -11,23 +16,10 @@ class User
    property  :level , Integer
    property  :account_id, Integer
 end
-class Server
-  include DataMapper::Resource
-  property :id, Serial
-  property :ip, Text
-  property :title, Text
-end
-class Store
-  include DataMapper::Resource
-  property :id, Serial
-  property :host, Text
-  property :login, Text
-  property :password, Text
-  property :server_id, Integer
-end
 
 describe Beds, "#Scaffold" do
-  scaffold = Beds::Scaffold.new()
+
+  scaffold = Beds::Scaffold.new
   it "Can scaffold" do
     scaffold.generate.should == true
   end
@@ -41,3 +33,4 @@ describe Beds, "#Scaffold" do
     scaffold.templates.keys.count.should > 0
   end
 end
+
