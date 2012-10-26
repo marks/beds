@@ -1,6 +1,6 @@
 <form class="well row" method="post" action="/<%=@model_name.downcase%>/save">
 <% @properties.each do |prop| %>
-<% next if prop.name == :id %>
+<% next if prop.name == :id or prop.name == :created_at %>
   <label><%=prop.name.to_s%></label>
   <%=form_type(prop,:name => prop.name)%>
 <% end %>

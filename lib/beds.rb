@@ -88,7 +88,7 @@ module Beds
 					"<textbox class='span3' #{append - append[:value]}>#{append[:value] unless append[:value].nil?}</textbox>"
 				when DataMapper::Property::Float, DataMapper::Property::Integer, DataMapper::Property::Decimal
 					"<input type='text' class='span1' #{append} />"
-				when DateTime, Date, Time
+				when DataMapper::Property::DateTime, DataMaper::Property::Date, DataMapper::Property::Time
 					"<input type='text' class='span2' #{append} />"
 				else
 					"<input type='text' class='span1' #{append} />"
